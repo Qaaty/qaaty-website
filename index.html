@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قاعتي — تسيير قاعات الأفراح</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="shortcut icon" href="apple-touch-icon.png">
+<meta name="description" content="قاعتي: طبّقي كل شيء يخص قاعتك — الحجوزات، الدفعات، والإيصالات — من هاتفك.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241F5C;
+    --ink-muted:#6E68A8;
+    --bg:#F3F2FF;
+    --card:#FFFFFF;
+    --line:rgba(78,72,196,0.12);
+    --grad-1:#DAE1FF;
+    --grad-2:#8791E8;
+    --grad-3:#4D48C4;
+    --coral:#E8598F;
+    --coral-soft:#FBE3EC;
+    --wa:#25D366;
+    --wa-dark:#1DA851;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Tajawal', sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    overflow-x:hidden;
+  }
+  img, svg{ display:block; }
+  a{ color:inherit; }
+  section{ padding:80px 24px; }
+  .wrap{ max-width:1080px; margin:0 auto; }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:fixed; top:0; inset-inline:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px; gap:20px;
+    background:rgba(243,242,255,0.75);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.05rem; flex-shrink:0; }
+  .brand .mark{
+    width:34px; height:34px; border-radius:50%;
+    background:linear-gradient(150deg, var(--grad-2), var(--grad-3));
+    color:#fff; display:flex; align-items:center; justify-content:center; font-size:1rem;
+  }
+  .nav-links{ display:flex; gap:26px; flex:1; justify-content:center; }
+  .nav-links a{
+    text-decoration:none; color:var(--ink-muted); font-weight:700; font-size:.86rem; cursor:pointer;
+  }
+  .nav-links a:hover{ color:var(--grad-3); }
+  .nav-toggle{
+    display:none; border:none; background:var(--card); border:1px solid var(--line);
+    border-radius:10px; width:38px; height:38px; cursor:pointer; font-size:1.1rem; color:var(--ink);
+  }
+  .lang-pills{ display:flex; gap:6px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:4px; flex-shrink:0; }
+  .lang-pills button{
+    border:none; background:transparent; padding:7px 12px; border-radius:10px;
+    font-family:'Tajawal', sans-serif; font-weight:700; font-size:.78rem; color:var(--ink-muted); cursor:pointer;
+  }
+  .lang-pills button.active{ background:linear-gradient(150deg, var(--grad-2), var(--grad-3)); color:#fff; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:140px 24px 90px;
+    background:linear-gradient(160deg, var(--grad-1) 0%, var(--grad-2) 55%, var(--grad-3) 100%);
+    position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; width:420px; height:420px; border-radius:50%;
+    background:rgba(255,255,255,0.18); top:-160px; inset-inline-start:-140px;
+  }
+  .hero::after{
+    content:""; position:absolute; width:260px; height:260px; border-radius:50%;
+    background:rgba(255,255,255,0.14); bottom:-100px; inset-inline-end:-80px;
+  }
+  .hero-grid{
+    max-width:1080px; margin:0 auto; position:relative; z-index:1;
+    display:grid; grid-template-columns:1.1fr .9fr; gap:50px; align-items:center;
+  }
+  .hero h1{
+    font-size:2.6rem; font-weight:900; line-height:1.25; color:#fff;
+    text-shadow:0 8px 30px rgba(30,27,90,.15);
+  }
+  .hero h1 span{ color:#FFE9A8; }
+  .hero p{
+    font-size:1.05rem; color:rgba(255,255,255,0.9); margin-top:18px; line-height:1.8; max-width:480px;
+  }
+  .hero-ctas{ display:flex; gap:12px; margin-top:32px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    border:none; border-radius:16px; padding:15px 26px;
+    font-family:'Tajawal', sans-serif; font-weight:800; font-size:.92rem; cursor:pointer; text-decoration:none;
+  }
+  .btn-primary-app{
+    background:#fff; color:var(--grad-3); box-shadow:0 14px 30px rgba(20,15,70,.2);
+  }
+  .btn-primary-app:hover{ background:#F3F2FF; }
+  .btn-wa{ background:var(--wa); color:#fff; box-shadow:0 14px 30px rgba(29,168,81,.35); }
+  .btn-wa:hover{ background:var(--wa-dark); }
+  .btn-ghost{ background:rgba(255,255,255,0.16); color:#fff; border:1.5px solid rgba(255,255,255,0.5) !important; }
+  .hero-trial{
+    display:inline-flex; align-items:center; gap:8px; margin-top:22px;
+    background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.35);
+    padding:8px 16px; border-radius:20px; font-size:.8rem; font-weight:700; color:#fff;
+  }
+
+  /* ---------- Phone mockup (signature element) ---------- */
+  .phone-wrap{ display:flex; justify-content:center; position:relative; }
+  .phone{
+    width:230px; background:#0F0B2E; border-radius:32px; padding:10px;
+    box-shadow:0 40px 80px rgba(20,15,70,.4);
+    animation:float 5s ease-in-out infinite;
+  }
+  @keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-14px); } }
+  .phone-screen{
+    background:linear-gradient(165deg, #E4E8FF, #B9C2F5);
+    border-radius:24px; padding:16px 14px; height:460px; overflow:hidden;
+  }
+  .phone-screen .ps-head{ font-size:.72rem; font-weight:800; color:var(--ink); margin-bottom:10px; text-align:center; }
+  .ps-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .ps-grid div{
+    aspect-ratio:1/1; border-radius:6px; background:rgba(255,255,255,0.55);
+    font-size:.5rem; display:flex; align-items:center; justify-content:center; color:var(--ink-muted); font-weight:700;
+  }
+  .ps-grid div.booked{ background:linear-gradient(150deg, var(--grad-2), var(--grad-3)); color:#fff; }
+  .ps-grid div.pending{ background:var(--coral-soft); color:var(--coral); border:1.5px dashed var(--coral); }
+  .ps-card{
+    margin-top:14px; background:#fff; border-radius:14px; padding:12px; box-shadow:0 8px 20px rgba(20,15,70,.1);
+  }
+  .ps-card .ps-label{ font-size:.6rem; color:var(--ink-muted); font-weight:700; }
+  .ps-card .ps-value{ font-size:.95rem; font-weight:800; color:var(--ink); margin-top:2px; }
+
+  .ps-slide{ display:none; min-height:300px; }
+  .ps-slide.active{ display:block; animation:fadeIn .35s ease; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+
+  .ps-stat-row{ display:flex; gap:8px; }
+  .ps-stat{
+    flex:1; background:#fff; border-radius:14px; padding:14px 10px; text-align:center;
+    box-shadow:0 8px 20px rgba(20,15,70,.1);
+  }
+  .ps-stat .ps-label{ font-size:.58rem; color:var(--ink-muted); font-weight:700; }
+  .ps-stat .ps-value{ font-size:1.15rem; font-weight:900; color:var(--grad-3); margin-top:6px; }
+
+  .ps-schedule-card{
+    background:#fff; border-radius:14px; padding:12px 14px; margin-bottom:10px;
+    box-shadow:0 8px 20px rgba(20,15,70,.1);
+  }
+  .ps-sched-name{ font-size:.82rem; font-weight:800; color:var(--ink); }
+  .ps-sched-phone{ font-size:.68rem; color:var(--ink-muted); margin-top:3px; }
+  .ps-sched-status{ font-size:.68rem; font-weight:700; color:#1E7A63; margin-top:5px; }
+  .ps-sched-status.pending{ color:var(--coral); }
+
+  .ps-dots{ display:flex; justify-content:center; gap:6px; margin-top:14px; }
+  .ps-dot{
+    width:7px; height:7px; border-radius:50%; background:rgba(78,72,196,0.25); cursor:pointer;
+  }
+  .ps-dot.active{ background:var(--grad-3); width:20px; border-radius:5px; }
+
+  .ps-nav{
+    display:flex; justify-content:center; gap:8px; margin-top:12px;
+    background:rgba(255,255,255,0.6); border-radius:16px; padding:8px 14px;
+  }
+  .ps-nav-item{
+    width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    color:var(--ink-muted);
+  }
+  .ps-nav-item.active{ background:linear-gradient(150deg, var(--grad-2), var(--grad-3)); color:#fff; }
+
+  /* ---------- Installation ---------- */
+  .install{ background:var(--card); }
+  .install-cols{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .install-col{
+    background:var(--bg); border:1px solid var(--line); border-radius:24px; padding:26px;
+  }
+  .install-col-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+  .install-col-head h3{ font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:8px; }
+  .install-col-head .req-tag{
+    font-size:.68rem; font-weight:700; background:var(--coral-soft); color:var(--coral);
+    padding:4px 10px; border-radius:10px;
+  }
+  .install-steps{ display:flex; flex-direction:column; gap:14px; margin-bottom:16px; }
+  .install-step{ display:flex; align-items:flex-start; gap:12px; }
+  .install-step .is-num{
+    width:26px; height:26px; border-radius:50%; flex-shrink:0;
+    background:linear-gradient(150deg, var(--grad-2), var(--grad-3)); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:800;
+  }
+  .install-step p{ font-size:.84rem; line-height:1.7; color:var(--ink); }
+  .install-step p strong{ color:var(--grad-3); }
+  .install-note{
+    font-size:.76rem; color:var(--ink-muted); line-height:1.7;
+    background:var(--card); border:1px dashed var(--line); border-radius:12px; padding:10px 12px;
+  }
+
+  /* ---------- Section heads ---------- */
+  .section-head{ text-align:center; max-width:560px; margin:0 auto 48px; }
+  .eyebrow{ font-size:.78rem; font-weight:800; color:var(--grad-3); letter-spacing:.5px; margin-bottom:8px; }
+  .section-head h2{ font-size:1.8rem; font-weight:900; }
+  .section-head p{ font-size:.95rem; color:var(--ink-muted); margin-top:10px; line-height:1.8; }
+
+  /* ---------- Features ---------- */
+  .features-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; }
+  .feature-card{
+    background:var(--card); border:1px solid var(--line); border-radius:22px; padding:26px;
+    box-shadow:0 14px 30px rgba(78,72,196,.06);
+  }
+  .feature-card .f-icon{
+    width:46px; height:46px; border-radius:14px; margin-bottom:16px;
+    background:linear-gradient(150deg, var(--grad-2), var(--grad-3));
+    display:flex; align-items:center; justify-content:center; color:#fff;
+  }
+  .feature-card h3{ font-size:1.05rem; font-weight:800; margin-bottom:8px; }
+  .feature-card p{ font-size:.86rem; color:var(--ink-muted); line-height:1.8; }
+
+  /* ---------- How it works ---------- */
+  .how{ background:var(--card); }
+  .how-steps{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+  .how-step{ text-align:center; padding:0 10px; }
+  .how-step .num{
+    width:44px; height:44px; border-radius:50%; margin:0 auto 16px;
+    background:linear-gradient(150deg, var(--grad-2), var(--grad-3)); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.1rem;
+  }
+  .how-step h3{ font-size:1rem; font-weight:800; margin-bottom:8px; }
+  .how-step p{ font-size:.85rem; color:var(--ink-muted); line-height:1.8; }
+
+  /* ---------- Pricing / trial ---------- */
+  .pricing{
+    background:linear-gradient(160deg, var(--grad-1) 0%, var(--grad-2) 55%, var(--grad-3) 100%);
+    border-radius:32px; margin:0 24px; padding:60px 30px; text-align:center; color:#fff;
+  }
+  .pricing h2{ font-size:1.7rem; font-weight:900; }
+  .pricing .big-price{ font-size:2.2rem; font-weight:900; margin:18px 0 6px; color:#FFE9A8; }
+  .pricing .big-price span{ font-size:1rem; color:rgba(255,255,255,.85); font-weight:700; }
+  .pricing p{ font-size:.9rem; color:rgba(255,255,255,.9); max-width:480px; margin:14px auto 28px; line-height:1.8; }
+
+  /* ---------- Footer ---------- */
+  footer{ padding:50px 24px 30px; text-align:center; }
+  footer .brand{ justify-content:center; margin-bottom:14px; }
+  footer .contact-line{ font-size:.85rem; color:var(--ink-muted); margin-bottom:18px; }
+  footer .contact-line strong{ color:var(--ink); }
+  footer .rights{ font-size:.76rem; color:var(--ink-muted); margin-top:20px; }
+
+  @media (max-width: 820px){
+    .nav-links{
+      display:none; position:fixed; top:64px; inset-inline:0;
+      background:var(--card); border-bottom:1px solid var(--line);
+      flex-direction:column; padding:18px 24px; gap:16px; text-align:center;
+      box-shadow:0 20px 30px rgba(78,72,196,.08);
+    }
+    .nav-links.open{ display:flex; }
+    .nav-toggle{ display:block; }
+    .hero-grid{ grid-template-columns:1fr; text-align:center; }
+    .hero p{ margin-inline:auto; }
+    .hero-ctas{ justify-content:center; }
+    .phone-wrap{ order:-1; }
+    .features-grid{ grid-template-columns:1fr; }
+    .how-steps{ grid-template-columns:1fr; }
+    .install-cols{ grid-template-columns:1fr; }
+    .hero h1{ font-size:2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><div class="mark" style="background:none;"><svg viewBox="0 0 512 512" width="20" height="20"><defs><linearGradient id="bgm" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8791E8"/><stop offset="100%" stop-color="#4D48C4"/></linearGradient></defs><rect x="0" y="0" width="512" height="512" rx="115" fill="url(#bgm)"/><rect x="175" y="54" width="26" height="56" rx="13" fill="#FFFFFF"/><rect x="311" y="54" width="26" height="56" rx="13" fill="#FFFFFF"/><rect x="96" y="118" width="320" height="290" rx="32" fill="#FFFFFF"/><path d="M128,118 L384,118 A32,32 0 0 1 416,150 L416,198 L96,198 L96,150 A32,32 0 0 1 128,118 Z" fill="#4D48C4"/><circle cx="256" cy="303" r="62" fill="#E8598F"/><path d="M228,304 L248,324 L288,280" fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span data-i18n="brand">قاعتي</span></div>
+  <nav class="nav-links" id="navLinks">
+    <a href="#features" data-i18n="navFeatures">المميزات</a>
+    <a href="#how" data-i18n="navHow">كيف تبدئين</a>
+    <a href="#install" data-i18n="navInstall">التثبيت</a>
+    <a href="#pricing" data-i18n="navPricing">التسعير</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="القائمة">☰</button>
+  <div class="lang-pills" id="langPills">
+    <button class="active" data-lang="ar">ع</button>
+    <button data-lang="fr">Fr</button>
+    <button data-lang="en">En</button>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1 data-i18n="heroTitle">سيّري قاعتك من هاتفك، <span>ولو كنتِ في السوق</span></h1>
+      <p data-i18n="heroSub">التقويم، الحجوزات، الدفعات، والإيصالات — كل شيء في تطبيق واحد بسيط، مصمم خصيصًا لصاحبات قاعات الأفراح.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary-app" id="heroTryFree">
+          <span data-i18n="ctaTryFree">جرّبي مجانًا</span>
+        </a>
+        <a href="#" class="btn btn-wa" id="heroWhatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.11c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.81-.11-.42-.13-.95-.31-1.63-.6-2.87-1.24-4.74-4.13-4.88-4.32-.14-.19-1.17-1.55-1.17-2.96s.73-2.1.99-2.39c.26-.28.57-.35.76-.35h.55c.18 0 .42-.07.65.5.24.58.83 2.01.9 2.16.07.15.12.32.02.51-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.1 1.53.72 1.79.85.26.13.44.19.5.3.07.11.07.63-.17 1.31z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+      <div style="margin-top:14px;">
+        <a href="#features" class="btn btn-ghost" data-i18n="ctaFeatures" style="padding:10px 20px; font-size:.82rem;">شاهدي المميزات</a>
+      </div>
+      <div class="hero-trial">⏳ <span data-i18n="heroTrial">مجانًا حتى فاتح الشهر المقبل</span></div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="ps-head" id="psHead" data-i18n="phoneHead">أغسطس 2026</div>
+
+          <!-- Screen 1: calendar -->
+          <div class="ps-slide active" id="psSlide0">
+            <div class="ps-grid" id="psGrid"></div>
+            <div class="ps-card">
+              <div class="ps-label" data-i18n="phoneCardLabel">المداخيل هذا الشهر</div>
+              <div class="ps-value" data-i18n="phoneMonthValue">24,500 اوقية</div>
+            </div>
+          </div>
+
+          <!-- Screen 2: today's stats -->
+          <div class="ps-slide" id="psSlide1">
+            <div class="ps-stat-row">
+              <div class="ps-stat">
+                <div class="ps-label" data-i18n="phoneToday1">مداخيل اليوم</div>
+                <div class="ps-value" data-i18n="phoneTodayValue1">2,500 اوقية</div>
+              </div>
+              <div class="ps-stat">
+                <div class="ps-label" data-i18n="phoneToday2">حجوزات اليوم</div>
+                <div class="ps-value">1</div>
+              </div>
+            </div>
+            <div class="ps-stat" style="margin-top:10px;">
+              <div class="ps-label" data-i18n="phoneToday3">حجوزات الشهر</div>
+              <div class="ps-value">6</div>
+            </div>
+          </div>
+
+          <!-- Screen 3: today's schedule -->
+          <div class="ps-slide" id="psSlide2">
+            <div class="ps-label" style="margin-bottom:10px;" data-i18n="phoneScheduleLabel">جدول اليوم</div>
+            <div class="ps-schedule-card">
+              <div class="ps-sched-name" data-i18n="phoneClient1">سلمى و عادل</div>
+              <div class="ps-sched-phone">📞 0612 34 56 78</div>
+              <div class="ps-sched-status">✓ <span data-i18n="phoneScheduleStatus">محجوز · 15,000 اوقية</span></div>
+            </div>
+            <div class="ps-schedule-card" style="opacity:.6;">
+              <div class="ps-sched-name" data-i18n="phoneClient2">أسماء بنعلي</div>
+              <div class="ps-sched-phone">📞 0677 88 12 30</div>
+              <div class="ps-sched-status pending" data-i18n="phoneScheduleStatus2">متبقي 4,000 اوقية</div>
+            </div>
+          </div>
+
+          <div class="ps-dots">
+            <span class="ps-dot active" data-slide="0"></span>
+            <span class="ps-dot" data-slide="1"></span>
+            <span class="ps-dot" data-slide="2"></span>
+          </div>
+
+          <div class="ps-nav">
+            <div class="ps-nav-item active">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+            </div>
+            <div class="ps-nav-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            </div>
+            <div class="ps-nav-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h3.2a1.8 1.8 0 010 3.6h-2a1.8 1.8 0 000 3.6h3.3"/></svg>
+            </div>
+            <div class="ps-nav-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 11-4 0v-.09a1.7 1.7 0 00-1-1.55 1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.7 1.7 0 00.34-1.87 1.7 1.7 0 00-1.55-1H3a2 2 0 110-4h.09a1.7 1.7 0 001.55-1 1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06a1.7 1.7 0 001.87.34H9a1.7 1.7 0 001-1.55V3a2 2 0 114 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06a1.7 1.7 0 00-.34 1.87V9a1.7 1.7 0 001.55 1H21a2 2 0 110 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="featuresEyebrow">المميزات</div>
+      <h2 data-i18n="featuresTitle">كل ما تحتاجينه لتسيير قاعتك</h2>
+      <p data-i18n="featuresSub">بُني خصيصًا حول الطريقة التي تعمل بها قاعات الأفراح فعليًا — لا ميزات زائدة، فقط ما يُستعمل يوميًا.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="f-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+        <h3 data-i18n="f1Title">تقويم الحجوزات</h3>
+        <p data-i18n="f1Desc">شاهدي كل الأيام المحجوزة والمتاحة بلمحة واحدة، وأضيفي حجزًا جديدًا في ثوانٍ.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
+        <h3 data-i18n="f2Title">الدفعات والمداخيل</h3>
+        <p data-i18n="f2Desc">تتبّعي كل دفعة بتاريخها وطريقتها، واعرفي مداخيلك الشهرية بدون حساب يدوي.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z"/></svg></div>
+        <h3 data-i18n="f3Title">جدول للحارس</h3>
+        <p data-i18n="f3Desc">صدّري جدولًا شهريًا جاهزًا للطباعة، ليعرف حارس القاعة من هو قادم وفي أي يوم.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M12 3l7 4v5c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V7l7-4z"/></svg></div>
+        <h3 data-i18n="f4Title">إيصالات فورية</h3>
+        <p data-i18n="f4Desc">أنشئي إيصال دفع لكل زبونة بضغطة واحدة، مع كل التفاصيل والمبلغ المتبقي.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="howEyebrow">كيف تبدئين</div>
+      <h2 data-i18n="howTitle">ثلاث خطوات فقط</h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="num">1</div>
+        <h3 data-i18n="step1Title">أنشئي حسابك</h3>
+        <p data-i18n="step1Desc">أدخلي اسم قاعتك ورقم هاتفك، ويصبح حسابك جاهزًا خلال دقيقة.</p>
+      </div>
+      <div class="how-step">
+        <div class="num">2</div>
+        <h3 data-i18n="step2Title">تواصلي عبر واتساب</h3>
+        <p data-i18n="step2Desc">راسلينا لنُفعّل حسابك بشكل دائم ونجيب عن أي سؤال لديك.</p>
+      </div>
+      <div class="how-step">
+        <div class="num">3</div>
+        <h3 data-i18n="step3Title">ابدئي التسيير</h3>
+        <p data-i18n="step3Desc">أول شهر مجانًا بالكامل — جرّبي التطبيق واطمئني قبل أي التزام.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="install" id="install">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="installEyebrow">التثبيت</div>
+      <h2 data-i18n="installTitle">كيف تثبّتين التطبيق؟</h2>
+      <p data-i18n="installSub">أضيفي التطبيق إلى شاشتك الرئيسية في ثوانٍ معدودة — بدون متجر تطبيقات.</p>
+    </div>
+    <div class="install-cols">
+      <div class="install-col">
+        <div class="install-col-head">
+          <h3>📱 <span data-i18n="installIphone">آيفون</span></h3>
+          <span class="req-tag" data-i18n="installIphoneReq">يتطلب Safari</span>
+        </div>
+        <div class="install-steps">
+          <div class="install-step"><div class="is-num">1</div><p data-i18n="ip1">اضغطي على <strong>جرّبي مجانًا</strong> — سيفتح Safari التطبيق تلقائيًا.</p></div>
+          <div class="install-step"><div class="is-num">2</div><p data-i18n="ip2">اضغطي على أيقونة <strong>المشاركة</strong> (مربع بسهم ↑) أسفل Safari.</p></div>
+          <div class="install-step"><div class="is-num">3</div><p data-i18n="ip3">مرّري لأسفل واضغطي على <strong>"على الشاشة الرئيسية"</strong>.</p></div>
+          <div class="install-step"><div class="is-num">4</div><p data-i18n="ip4">اضغطي على <strong>إضافة</strong> — تظهر أيقونة التطبيق على شاشتك!</p></div>
+        </div>
+        <div class="install-note" data-i18n="ipNote">استخدمي Safari فقط على الآيفون. Chrome وFirefox لا يدعمان التثبيت.</div>
+      </div>
+
+      <div class="install-col">
+        <div class="install-col-head">
+          <h3>🤖 <span data-i18n="installAndroid">أندرويد</span></h3>
+          <span class="req-tag" data-i18n="installAndroidReq">يُفضّل Chrome</span>
+        </div>
+        <div class="install-steps">
+          <div class="install-step"><div class="is-num">1</div><p data-i18n="an1">اضغطي على <strong>جرّبي مجانًا</strong> — سيفتح Chrome التطبيق تلقائيًا.</p></div>
+          <div class="install-step"><div class="is-num">2</div><p data-i18n="an2">اضغطي على <strong>النقاط الثلاث</strong> (⋮) أعلى يمين Chrome.</p></div>
+          <div class="install-step"><div class="is-num">3</div><p data-i18n="an3">مرّري لأسفل واضغطي على <strong>"إضافة إلى الشاشة الرئيسية"</strong>.</p></div>
+          <div class="install-step"><div class="is-num">4</div><p data-i18n="an4">أكّدي بالضغط على <strong>تثبيت</strong> — التطبيق جاهز!</p></div>
+        </div>
+        <div class="install-note" data-i18n="anNote">على أجهزة Samsung، يمكنك أيضًا استخدام Samsung Internet بنفس الخطوات.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="pricing">
+    <h2 data-i18n="pricingTitle">مجانية حتى فاتح الشهر المقبل</h2>
+    <div class="big-price"><span data-i18n="pricingBigNumber">1500</span> <span data-i18n="pricingFirstMonth">اوقية / شهريًا بعد الفترة المجانية</span></div>
+    <p data-i18n="pricingDesc">التجربة مجانية من يوم إنشاء الحساب إلى فاتح الشهر المقبل. بعدها، اشتراك شهري بسيط يناسب حجم قاعتك — بدون عقود طويلة، وبدون مفاجآت.</p>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <a href="#" class="btn btn-primary-app" id="pricingTryFree">
+        <span data-i18n="ctaTryFree2">ابدئي مجانًا</span>
+      </a>
+      <a href="#" class="btn btn-wa" id="pricingWhatsapp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.11c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.81-.11-.42-.13-.95-.31-1.63-.6-2.87-1.24-4.74-4.13-4.88-4.32-.14-.19-1.17-1.55-1.17-2.96s.73-2.1.99-2.39c.26-.28.57-.35.76-.35h.55c.18 0 .42-.07.65.5.24.58.83 2.01.9 2.16.07.15.12.32.02.51-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.1 1.53.72 1.79.85.26.13.44.19.5.3.07.11.07.63-.17 1.31z"/></svg>
+        <span>WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand"><div class="mark" style="background:none;"><svg viewBox="0 0 512 512" width="20" height="20"><defs><linearGradient id="bgm" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8791E8"/><stop offset="100%" stop-color="#4D48C4"/></linearGradient></defs><rect x="0" y="0" width="512" height="512" rx="115" fill="url(#bgm)"/><rect x="175" y="54" width="26" height="56" rx="13" fill="#FFFFFF"/><rect x="311" y="54" width="26" height="56" rx="13" fill="#FFFFFF"/><rect x="96" y="118" width="320" height="290" rx="32" fill="#FFFFFF"/><path d="M128,118 L384,118 A32,32 0 0 1 416,150 L416,198 L96,198 L96,150 A32,32 0 0 1 128,118 Z" fill="#4D48C4"/><circle cx="256" cy="303" r="62" fill="#E8598F"/><path d="M228,304 L248,324 L288,280" fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span data-i18n="brand">قاعتي</span></div>
+  <div class="contact-line" data-i18n="footerContact">للتواصل والاستفسار: <strong id="footerWhatsappNumber">+222 XX XX XX XX</strong></div>
+  <div class="rights" data-i18n="footerRights">جميع الحقوق محفوظة</div>
+</footer>
+
+<script>
+  // TODO: replace with the real live app URL once it's deployed on GitHub Pages
+  // (same idea as stadbook.com linking "Essayer Gratuitement" to kerima1.github.io/StadBook/)
+  const APP_URL = 'https://your-username.github.io/your-repo/';
+
+  // Using the same number found on stadbook.com — replace if this app should use a different one
+  const WHATSAPP_NUMBER = '22249395255';
+  const waLink = `https://wa.me/${WHATSAPP_NUMBER}`;
+
+  document.getElementById('heroTryFree').href = APP_URL;
+  document.getElementById('pricingTryFree').href = APP_URL;
+  document.getElementById('heroWhatsapp').href = waLink;
+  document.getElementById('pricingWhatsapp').href = waLink;
+  document.getElementById('footerWhatsappNumber').textContent = '+' + WHATSAPP_NUMBER.replace(/(\d{3})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1 $2 $3 $4 $5');
+
+  // build the mini calendar in the phone mockup
+  const psGrid = document.getElementById('psGrid');
+  const bookedDays = [3, 14, 22];
+  const pendingDays = [8, 19, 27];
+  for(let d = 1; d <= 28; d++){
+    const cell = document.createElement('div');
+    cell.textContent = d;
+    if(bookedDays.includes(d)) cell.classList.add('booked');
+    if(pendingDays.includes(d)) cell.classList.add('pending');
+    psGrid.appendChild(cell);
+  }
+
+  // rotate the phone mockup between its 3 mini-screens, and let people click the dots too
+  const psSlides = document.querySelectorAll('.ps-slide');
+  const psDots = document.querySelectorAll('.ps-dot');
+  let psIndex = 0;
+  let psTimer = null;
+
+  function showPsSlide(i){
+    psIndex = i;
+    psSlides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    psDots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+  }
+  function startPsRotation(){
+    clearInterval(psTimer);
+    psTimer = setInterval(() => showPsSlide((psIndex + 1) % psSlides.length), 3200);
+  }
+  psDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      showPsSlide(parseInt(dot.dataset.slide, 10));
+      startPsRotation(); // reset the timer so it doesn't jump right after a manual click
+    });
+  });
+  startPsRotation();
+
+  const T = {
+    ar: {
+      brand:'قاعتي',
+      heroTitle:'سيّر/ي قاعتك من هاتفك، <span>ولو كنت في السوق</span>',
+      heroSub:'التقويم، الحجوزات، الدفعات، والإيصالات — كل شيء في تطبيق واحد بسيط، مصمم خصيصًا لأصحاب/صاحبات قاعات الأفراح.',
+      ctaTryFree:'جرّب/ي مجانًا', ctaTryFree2:'ابدأ/ي مجانًا',
+      ctaFeatures:'شاهد/ي المميزات', heroTrial:'مجانًا حتى فاتح الشهر المقبل',
+      phoneHead:'أغسطس 2026', phoneCardLabel:'المداخيل هذا الشهر',
+      phoneToday1:'مداخيل اليوم', phoneToday2:'حجوزات اليوم', phoneToday3:'حجوزات الشهر',
+      phoneScheduleLabel:'جدول اليوم', phoneScheduleStatus:'محجوز · 15,000 اوقية', phoneScheduleStatus2:'متبقي 4,000 اوقية',
+      phoneMonthValue:'24,500 اوقية', phoneTodayValue1:'2,500 اوقية',
+      phoneClient1:'سلمى و عادل', phoneClient2:'أسماء بنعلي',
+      featuresEyebrow:'المميزات', featuresTitle:'كل ما تحتاجه/ينه لتسيير قاعتك',
+      featuresSub:'بُني خصيصًا حول الطريقة التي تعمل بها قاعات الأفراح فعليًا — لا ميزات زائدة، فقط ما يُستعمل يوميًا.',
+      f1Title:'تقويم الحجوزات', f1Desc:'شاهد/ي كل الأيام المحجوزة والمتاحة بلمحة واحدة، وأضف/ي حجزًا جديدًا في ثوانٍ.',
+      f2Title:'الدفعات والمداخيل', f2Desc:'تتبّع/ي كل دفعة بتاريخها وطريقتها، واعرف/ي مداخيلك الشهرية بدون حساب يدوي.',
+      f3Title:'جدول للحارس', f3Desc:'صدّر/ي جدولًا شهريًا جاهزًا للطباعة، ليعرف حارس القاعة من هو قادم وفي أي يوم.',
+      f4Title:'إيصالات فورية', f4Desc:'أنشئ/ي إيصال دفع لكل زبون/ة بضغطة واحدة، مع كل التفاصيل والمبلغ المتبقي.',
+      howEyebrow:'كيف تبدأ/ين', howTitle:'ثلاث خطوات فقط',
+      step1Title:'أنشئ/ي حسابك', step1Desc:'أدخل/ي اسم قاعتك، رقم هاتفك، وبريدك الإلكتروني — ويصبح حسابك جاهزًا خلال دقيقة.',
+      step2Title:'تواصل/ي عبر واتساب', step2Desc:'تواصل/ي معنا لنُفعّل حسابك بشكل دائم ونجيب عن أي سؤال لديك.',
+      step3Title:'ابدأ/ي التسيير', step3Desc:'التجربة مجانية حتى فاتح الشهر المقبل — جرّب/ي التطبيق واطمئن/ي قبل أي التزام.',
+      navFeatures:'المميزات', navHow:'كيف تبدأ/ين', navInstall:'التثبيت', navPricing:'التسعير',
+      installEyebrow:'التثبيت', installTitle:'كيف تثبّت/ين التطبيق؟',
+      installSub:'أضف/ي التطبيق إلى شاشتك الرئيسية في ثوانٍ معدودة — بدون متجر تطبيقات.',
+      installIphone:'آيفون', installIphoneReq:'يتطلب Safari',
+      ip1:'اضغط/ي على <strong>جرّب/ي مجانًا</strong> — سيفتح Safari التطبيق تلقائيًا.',
+      ip2:'اضغط/ي على أيقونة <strong>المشاركة</strong> (مربع بسهم ↑) أسفل Safari.',
+      ip3:'مرّر/ي لأسفل واضغط/ي على <strong>"على الشاشة الرئيسية"</strong>.',
+      ip4:'اضغط/ي على <strong>إضافة</strong> — تظهر أيقونة التطبيق على شاشتك!',
+      ipNote:'استخدم/ي Safari فقط على الآيفون. Chrome وFirefox لا يدعمان التثبيت.',
+      installAndroid:'أندرويد', installAndroidReq:'يُفضّل Chrome',
+      an1:'اضغط/ي على <strong>جرّب/ي مجانًا</strong> — سيفتح Chrome التطبيق تلقائيًا.',
+      an2:'اضغط/ي على <strong>النقاط الثلاث</strong> (⋮) أعلى يمين Chrome.',
+      an3:'مرّر/ي لأسفل واضغط/ي على <strong>"إضافة إلى الشاشة الرئيسية"</strong>.',
+      an4:'أكّد/ي بالضغط على <strong>تثبيت</strong> — التطبيق جاهز!',
+      anNote:'على أجهزة Samsung، يمكنك أيضًا استخدام Samsung Internet بنفس الخطوات.',
+      pricingTitle:'مجانية حتى فاتح الشهر المقبل', pricingBigNumber:'1500', pricingFirstMonth:'اوقية / شهريًا بعد الفترة المجانية',
+      pricingDesc:'التجربة مجانية من يوم إنشاء الحساب إلى فاتح الشهر المقبل. بعدها، اشتراك شهري بسيط وثابت — بدون عقود طويلة، وبدون مفاجآت.',
+      footerContact:'للتواصل والاستفسار: <strong id="footerWhatsappNumber"></strong>',
+      footerRights:'© 2026 جميع الحقوق محفوظة',
+    },
+    fr: {
+      brand:'Qaaty',
+      heroTitle:'Gérez votre salle depuis votre téléphone, <span>même au marché</span>',
+      heroSub:"Calendrier, réservations, paiements et reçus — tout dans une seule application simple, pensée pour les propriétaires de salles de fête.",
+      ctaTryFree:'Essayer Gratuitement', ctaTryFree2:'Commencer Gratuitement',
+      ctaFeatures:'Voir les fonctionnalités', heroTrial:'Gratuit jusqu\'au 1er du mois prochain',
+      phoneHead:'Août 2026', phoneCardLabel:'Revenus ce mois',
+      phoneToday1:"Revenus aujourd'hui", phoneToday2:"Réservations aujourd'hui", phoneToday3:'Réservations ce mois',
+      phoneScheduleLabel:'Planning du jour', phoneScheduleStatus:'Réservé · 15 000 MRU', phoneScheduleStatus2:'Reste 4 000 MRU',
+      phoneMonthValue:'24 500 MRU', phoneTodayValue1:'2 500 MRU',
+      phoneClient1:'Salma et Adel', phoneClient2:'Asma Benali',
+      featuresEyebrow:'FONCTIONNALITÉS', featuresTitle:'Tout ce qu\'il faut pour gérer votre salle',
+      featuresSub:"Conçu autour de la façon dont les salles de fête fonctionnent réellement — pas de superflu, juste l'essentiel du quotidien.",
+      f1Title:'Calendrier des réservations', f1Desc:"Voyez d'un coup d'œil les jours réservés et disponibles, ajoutez une réservation en quelques secondes.",
+      f2Title:'Paiements et revenus', f2Desc:'Suivez chaque paiement avec sa date et son moyen, connaissez vos revenus mensuels sans calcul manuel.',
+      f3Title:'Planning pour le gardien', f3Desc:'Exportez un planning mensuel prêt à imprimer pour que le gardien sache qui vient et quand.',
+      f4Title:'Reçus instantanés', f4Desc:'Générez un reçu de paiement pour chaque client(e) en un clic, avec tous les détails et le solde restant.',
+      howEyebrow:'COMMENT COMMENCER', howTitle:'Seulement trois étapes',
+      step1Title:'Créez votre compte', step1Desc:'Entrez le nom de votre salle, votre numéro et votre email — votre compte est prêt en une minute.',
+      step2Title:'Contactez-nous sur WhatsApp', step2Desc:'Écrivez-nous pour activer définitivement votre compte et répondre à vos questions.',
+      step3Title:'Commencez à gérer', step3Desc:"Gratuit jusqu'au 1er du mois prochain — testez l'application avant tout engagement.",
+      navFeatures:'Fonctionnalités', navHow:'Comment commencer', navInstall:'Installation', navPricing:'Tarif',
+      installEyebrow:'INSTALLATION', installTitle:"Comment installer l'application ?",
+      installSub:"Ajoutez l'application à votre écran d'accueil en quelques secondes — sans passer par un store.",
+      installIphone:'iPhone', installIphoneReq:'Safari requis',
+      ip1:'Appuyez sur <strong>Essayer Gratuitement</strong> — Safari ouvre l\'application automatiquement.',
+      ip2:'Appuyez sur l\'icône <strong>Partager</strong> (carré avec flèche ↑) en bas de Safari.',
+      ip3:'Faites défiler et appuyez sur <strong>« Sur l\'écran d\'accueil »</strong>.',
+      ip4:'Appuyez sur <strong>Ajouter</strong> — l\'icône apparaît sur votre écran !',
+      ipNote:'Utilisez uniquement Safari sur iPhone. Chrome et Firefox ne supportent pas l\'installation.',
+      installAndroid:'Android', installAndroidReq:'Chrome recommandé',
+      an1:'Appuyez sur <strong>Essayer Gratuitement</strong> — Chrome ouvre l\'application automatiquement.',
+      an2:'Appuyez sur les <strong>3 points</strong> (⋮) en haut à droite de Chrome.',
+      an3:'Faites défiler et appuyez sur <strong>« Ajouter à l\'écran d\'accueil »</strong>.',
+      an4:'Confirmez en appuyant sur <strong>Installer</strong> — l\'application est prête !',
+      anNote:'Sur Samsung, vous pouvez aussi utiliser Samsung Internet avec les mêmes étapes.',
+      pricingTitle:'Gratuit jusqu\'au 1er du mois prochain', pricingBigNumber:'1500', pricingFirstMonth:'MRU / mois après la période gratuite',
+      pricingDesc:"L'essai est gratuit du jour de la création du compte jusqu'au 1er du mois suivant. Ensuite, un abonnement mensuel simple et fixe — sans contrat long, sans surprise.",
+      footerContact:'Contact : <strong id="footerWhatsappNumber"></strong>',
+      footerRights:'© 2026 Tous droits réservés',
+    },
+    en: {
+      brand:'Qaaty',
+      heroTitle:'Run your hall from your phone, <span>even from the market</span>',
+      heroSub:'Calendar, bookings, payments, and receipts — all in one simple app, built specifically for wedding hall owners.',
+      ctaTryFree:'Try Free', ctaTryFree2:'Start Free',
+      ctaFeatures:'See the features', heroTrial:'Free until the 1st of next month',
+      phoneHead:'August 2026', phoneCardLabel:'Revenue this month',
+      phoneToday1:"Revenue today", phoneToday2:"Bookings today", phoneToday3:'Bookings this month',
+      phoneScheduleLabel:"Today's schedule", phoneScheduleStatus:'Booked · 15,000 MRU', phoneScheduleStatus2:'4,000 MRU remaining',
+      phoneMonthValue:'24,500 MRU', phoneTodayValue1:'2,500 MRU',
+      phoneClient1:'Salma & Adel', phoneClient2:'Asma Benali',
+      featuresEyebrow:'FEATURES', featuresTitle:'Everything you need to run your hall',
+      featuresSub:'Built around how wedding halls actually operate — no clutter, just what gets used every day.',
+      f1Title:'Booking calendar', f1Desc:'See every booked and available day at a glance, add a new booking in seconds.',
+      f2Title:'Payments & earnings', f2Desc:'Track every payment with its date and method, know your monthly earnings with no manual math.',
+      f3Title:'Guard schedule', f3Desc:"Export a print-ready monthly schedule so the hall's guard knows who's arriving and when.",
+      f4Title:'Instant receipts', f4Desc:'Generate a payment receipt for any client in one tap, with full details and remaining balance.',
+      howEyebrow:'HOW TO START', howTitle:'Just three steps',
+      step1Title:'Create your account', step1Desc:'Enter your hall name, phone number, and email — your account is ready in a minute.',
+      step2Title:'Contact us on WhatsApp', step2Desc:'Message us to permanently activate your account and get any questions answered.',
+      step3Title:'Start managing', step3Desc:'Free until the 1st of next month — try the app before any commitment.',
+      navFeatures:'Features', navHow:'How to start', navInstall:'Installation', navPricing:'Pricing',
+      installEyebrow:'INSTALLATION', installTitle:'How do you install the app?',
+      installSub:'Add the app to your home screen in seconds — no app store needed.',
+      installIphone:'iPhone', installIphoneReq:'Safari required',
+      ip1:'Tap <strong>Try Free</strong> — Safari opens the app automatically.',
+      ip2:'Tap the <strong>Share</strong> icon (square with an arrow ↑) at the bottom of Safari.',
+      ip3:'Scroll down and tap <strong>"Add to Home Screen"</strong>.',
+      ip4:'Tap <strong>Add</strong> — the app icon appears on your screen!',
+      ipNote:'Use Safari only on iPhone. Chrome and Firefox don\'t support installation.',
+      installAndroid:'Android', installAndroidReq:'Chrome recommended',
+      an1:'Tap <strong>Try Free</strong> — Chrome opens the app automatically.',
+      an2:'Tap the <strong>3 dots</strong> (⋮) at the top right of Chrome.',
+      an3:'Scroll down and tap <strong>"Add to Home Screen"</strong>.',
+      an4:'Confirm by tapping <strong>Install</strong> — the app is ready!',
+      anNote:'On Samsung, you can also use Samsung Internet with the same steps.',
+      pricingTitle:'Free until the 1st of next month', pricingBigNumber:'1500', pricingFirstMonth:'MRU / month after the free period',
+      pricingDesc:'The trial is free from account creation until the 1st of the next month. After that, a simple, fixed monthly subscription — no long contracts, no surprises.',
+      footerContact:'Contact: <strong id="footerWhatsappNumber"></strong>',
+      footerRights:'© 2026 All rights reserved',
+    }
+  };
+
+  function applyLang(lang){
+    const dict = T[lang];
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    // re-inject the whatsapp number span since innerHTML overwrite above wipes it
+    document.getElementById('footerWhatsappNumber').textContent =
+      '+' + WHATSAPP_NUMBER.replace(/(\d{3})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1 $2 $3 $4 $5');
+    document.querySelectorAll('.lang-pills button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  }
+
+  document.querySelectorAll('.lang-pills button').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+  applyLang('ar'); // ensures the page always matches the dictionary, even after wording fixes
+
+  // mobile hamburger menu
+  const navLinks = document.getElementById('navLinks');
+  document.getElementById('navToggle').addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>
