@@ -184,6 +184,7 @@
     background:var(--bg); border:1px solid var(--line); border-radius:24px; padding:26px;
   }
   .install-col-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+  .os-icon{ display:inline-flex; align-items:center; }
   .install-col-head h3{ font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:8px; }
   .install-col-head .req-tag{
     font-size:.68rem; font-weight:700; background:var(--coral-soft); color:var(--coral);
@@ -275,8 +276,7 @@
 <body>
 
 <div class="topbar">
-  <div class="brand"><div class="mark" style="background:none;"><svg viewBox="0 0 512 512" width="20" height="20"><defs><linearGradient id="bgm" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8791E8"/><stop offset="100%" stop-color="#4D48C4"/></linearGradient></defs><rect x="0" y="0" width="512" height="512" rx="115" fill="url(#bgm)"/><rect x="175" y="54" width="26" height="56" rx="13" fill="#FFFFFF"/><rect x="311" y="54" width="26" height="56" rx="13" fill="#FFFFFF"/><rect x="96" y="118" width="320" height="290" rx="32" fill="#FFFFFF"/><path d="M128,118 L384,118 A32,32 0 0 1 416,150 L416,198 L96,198 L96,150 A32,32 0 0 1 128,118 Z" fill="#4D48C4"/><circle cx="256" cy="303" r="62" fill="#E8598F"/><path d="M228,304 L248,324 L288,280" fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span data-i18n="brand">قاعتي</span></div>
-  <nav class="nav-links" id="navLinks">
+  <div class="brand"><svg width="28" height="28" style="border-radius:8px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"> <defs> <linearGradient id="bgH" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" stop-color="#8791E8"/> <stop offset="100%" stop-color="#4D48C4"/> </linearGradient> <radialGradient id="bulbGlowH" cx="50%" cy="50%" r="50%"> <stop offset="0%" stop-color="#FFF6D8" stop-opacity="0.9"/> <stop offset="40%" stop-color="#FFD34D" stop-opacity="0.5"/> <stop offset="100%" stop-color="#FFD34D" stop-opacity="0"/> </radialGradient> <linearGradient id="diamondGradH" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" stop-color="#C5F1FF"/> <stop offset="45%" stop-color="#4FC3F7"/> <stop offset="100%" stop-color="#1565C0"/> </linearGradient> </defs> <rect x="0" y="0" width="512" height="512" rx="115" fill="url(#bgH)"/> <!-- gold string lights, hanging from the top only — not reaching the bottom --> <g stroke="#E8B923" stroke-width="2.5" opacity="0.85"> <line x1="70" y1="0" x2="70" y2="300"/> <line x1="150" y1="0" x2="150" y2="360"/> <line x1="230" y1="0" x2="230" y2="260"/> <line x1="310" y1="0" x2="310" y2="260"/> <line x1="390" y1="0" x2="390" y2="360"/> <line x1="460" y1="0" x2="460" y2="300"/> </g> <!-- bulbs: soft glow halo + bright core + tiny highlight, for a more realistic lit look --> <g id="bulbsH"> <!-- string 1 --> <g><circle cx="70" cy="60" r="20" fill="url(#bulbGlowH)"/><circle cx="70" cy="60" r="8" fill="#FFCA3A"/><circle cx="70" cy="57" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="70" cy="160" r="20" fill="url(#bulbGlowH)"/><circle cx="70" cy="160" r="8" fill="#FFCA3A"/><circle cx="70" cy="157" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="70" cy="260" r="20" fill="url(#bulbGlowH)"/><circle cx="70" cy="260" r="8" fill="#FFCA3A"/><circle cx="70" cy="257" r="2.5" fill="#FFF9E6"/></g> <!-- string 2 --> <g><circle cx="150" cy="90" r="20" fill="url(#bulbGlowH)"/><circle cx="150" cy="90" r="8" fill="#FFCA3A"/><circle cx="150" cy="87" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="150" cy="200" r="20" fill="url(#bulbGlowH)"/><circle cx="150" cy="200" r="8" fill="#FFCA3A"/><circle cx="150" cy="197" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="150" cy="320" r="20" fill="url(#bulbGlowH)"/><circle cx="150" cy="320" r="8" fill="#FFCA3A"/><circle cx="150" cy="317" r="2.5" fill="#FFF9E6"/></g> <!-- string 3 --> <g><circle cx="230" cy="50" r="20" fill="url(#bulbGlowH)"/><circle cx="230" cy="50" r="8" fill="#FFCA3A"/><circle cx="230" cy="47" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="230" cy="150" r="20" fill="url(#bulbGlowH)"/><circle cx="230" cy="150" r="8" fill="#FFCA3A"/><circle cx="230" cy="147" r="2.5" fill="#FFF9E6"/></g> <!-- string 4 --> <g><circle cx="310" cy="50" r="20" fill="url(#bulbGlowH)"/><circle cx="310" cy="50" r="8" fill="#FFCA3A"/><circle cx="310" cy="47" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="310" cy="150" r="20" fill="url(#bulbGlowH)"/><circle cx="310" cy="150" r="8" fill="#FFCA3A"/><circle cx="310" cy="147" r="2.5" fill="#FFF9E6"/></g> <!-- string 5 --> <g><circle cx="390" cy="90" r="20" fill="url(#bulbGlowH)"/><circle cx="390" cy="90" r="8" fill="#FFCA3A"/><circle cx="390" cy="87" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="390" cy="200" r="20" fill="url(#bulbGlowH)"/><circle cx="390" cy="200" r="8" fill="#FFCA3A"/><circle cx="390" cy="197" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="390" cy="320" r="20" fill="url(#bulbGlowH)"/><circle cx="390" cy="320" r="8" fill="#FFCA3A"/><circle cx="390" cy="317" r="2.5" fill="#FFF9E6"/></g> <!-- string 6 --> <g><circle cx="460" cy="60" r="20" fill="url(#bulbGlowH)"/><circle cx="460" cy="60" r="8" fill="#FFCA3A"/><circle cx="460" cy="57" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="460" cy="160" r="20" fill="url(#bulbGlowH)"/><circle cx="460" cy="160" r="8" fill="#FFCA3A"/><circle cx="460" cy="157" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="460" cy="260" r="20" fill="url(#bulbGlowH)"/><circle cx="460" cy="260" r="8" fill="#FFCA3A"/><circle cx="460" cy="257" r="2.5" fill="#FFF9E6"/></g> </g> <!-- wedding arch / gateway --> <path d="M170,404 L170,258 A86,86 0 0 1 342,258 L342,404 L314,404 L314,268 A58,58 0 0 0 198,268 L198,404 Z" fill="#FFFFFF"/> <rect x="146" y="404" width="220" height="14" rx="7" fill="#FFFFFF"/> <!-- red carpet with gold borders, leading out from the entrance all the way to the bottom edge --> <path d="M180,418 L332,418 L382,512 L130,512 Z" fill="#C41E3A" stroke="#E8B923" stroke-width="4" stroke-linejoin="round"/> <path d="M191,420 L151,510" stroke="#E8B923" stroke-width="2.5" opacity="0.85"/> <path d="M321,420 L361,510" stroke="#E8B923" stroke-width="2.5" opacity="0.85"/> <!-- small gold engagement rings, replacing the old dot --> <g fill="none" stroke="#E8B923" stroke-width="5"> <circle cx="245" cy="196" r="15"/> <circle cx="267" cy="196" r="15"/> </g> <!-- small faceted blue diamond, mounted on top of the right ring --> <path d="M267,171 L275,180 L267,189 L259,180 Z" fill="url(#diamondGradH)" stroke="#0D47A1" stroke-width="1"/> <path d="M267,171 L267,189 M259,180 L275,180" stroke="#E3F7FF" stroke-width="1" opacity="0.7"/> <path d="M262,175 L264,177 L262,179 L260,177 Z" fill="#FFFFFF" opacity="0.9"/> </svg><span data-i18n="brand">قاعتي</span></div>
     <a href="#features" data-i18n="navFeatures">المميزات</a>
     <a href="#how" data-i18n="navHow">كيف تبدئين</a>
     <a href="#install" data-i18n="navInstall">التثبيت</a>
@@ -451,28 +451,28 @@
     <div class="install-cols">
       <div class="install-col">
         <div class="install-col-head">
-          <h3>📱 <span data-i18n="installIphone">آيفون</span></h3>
+          <h3><span class="os-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="#4D48C4"><path d="M16.365 1.43c0 1.14-.465 2.267-1.24 3.04-.86.86-1.92 1.36-3.04 1.27-.14-1.1.39-2.26 1.17-3.04.85-.84 2.08-1.42 3.11-1.27zM20.92 17.15c-.48 1.1-.71 1.59-1.32 2.54-.85 1.34-2.05 3.01-3.54 3.02-1.33.01-1.67-.86-3.47-.85-1.8.01-2.17.87-3.5.86-1.49-.01-2.62-1.52-3.47-2.86-2.37-3.74-2.62-8.12-1.16-10.38 1.03-1.6 2.65-2.54 4.17-2.54 1.55 0 2.53.86 3.81.86 1.24 0 2-.86 3.8-.86 1.36 0 2.8.74 3.82 2.01-3.37 1.85-2.82 6.65.86 8.2z"/></svg></span> <span data-i18n="installIphone">آيفون</span></h3>
           <span class="req-tag" data-i18n="installIphoneReq">يتطلب Safari</span>
         </div>
         <div class="install-steps">
-          <div class="install-step"><div class="is-num">1</div><p data-i18n="ip1">اضغطي على <strong>جرّبي مجانًا</strong> — سيفتح Safari التطبيق تلقائيًا.</p></div>
-          <div class="install-step"><div class="is-num">2</div><p data-i18n="ip2">اضغطي على أيقونة <strong>المشاركة</strong> (مربع بسهم ↑) أسفل Safari.</p></div>
-          <div class="install-step"><div class="is-num">3</div><p data-i18n="ip3">مرّري لأسفل واضغطي على <strong>"على الشاشة الرئيسية"</strong>.</p></div>
-          <div class="install-step"><div class="is-num">4</div><p data-i18n="ip4">اضغطي على <strong>إضافة</strong> — تظهر أيقونة التطبيق على شاشتك!</p></div>
+          <div class="install-step"><div class="is-num">1</div><p data-i18n="ip1">اضغط/ي على <strong>جرّب/ي مجانًا</strong> — سيفتح Safari التطبيق تلقائيًا.</p></div>
+          <div class="install-step"><div class="is-num">2</div><p data-i18n="ip2">اضغط/ي على أيقونة <strong>المشاركة</strong> (مربع بسهم ↑) أسفل Safari.</p></div>
+          <div class="install-step"><div class="is-num">3</div><p data-i18n="ip3">مرّر/ي لأسفل واضغط/ي على <strong>"إضافة إلى الشاشة الرئيسية"</strong>.</p></div>
+          <div class="install-step"><div class="is-num">4</div><p data-i18n="ip4">اضغط/ي على <strong>إضافة</strong> — تظهر أيقونة التطبيق على شاشتك!</p></div>
         </div>
         <div class="install-note" data-i18n="ipNote">استخدمي Safari فقط على الآيفون. Chrome وFirefox لا يدعمان التثبيت.</div>
       </div>
 
       <div class="install-col">
         <div class="install-col-head">
-          <h3>🤖 <span data-i18n="installAndroid">أندرويد</span></h3>
+          <h3><span class="os-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="#4D48C4"><path d="M17.6 9.48l1.43-2.48a.5.5 0 10-.87-.5l-1.46 2.53A8.04 8.04 0 0012 7.75c-1.68 0-3.23.5-4.53 1.35L6 6.57a.5.5 0 10-.87.5l1.43 2.48A6 6 0 004 14v5a1 1 0 001 1h1v2a1 1 0 102 0v-2h8v2a1 1 0 102 0v-2h1a1 1 0 001-1v-5a6 6 0 00-2.4-4.52zM8.5 12a.75.75 0 110-1.5.75.75 0 010 1.5zm7 0a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg></span> <span data-i18n="installAndroid">أندرويد</span></h3>
           <span class="req-tag" data-i18n="installAndroidReq">يُفضّل Chrome</span>
         </div>
         <div class="install-steps">
-          <div class="install-step"><div class="is-num">1</div><p data-i18n="an1">اضغطي على <strong>جرّبي مجانًا</strong> — سيفتح Chrome التطبيق تلقائيًا.</p></div>
-          <div class="install-step"><div class="is-num">2</div><p data-i18n="an2">اضغطي على <strong>النقاط الثلاث</strong> (⋮) أعلى يمين Chrome.</p></div>
-          <div class="install-step"><div class="is-num">3</div><p data-i18n="an3">مرّري لأسفل واضغطي على <strong>"إضافة إلى الشاشة الرئيسية"</strong>.</p></div>
-          <div class="install-step"><div class="is-num">4</div><p data-i18n="an4">أكّدي بالضغط على <strong>تثبيت</strong> — التطبيق جاهز!</p></div>
+          <div class="install-step"><div class="is-num">1</div><p data-i18n="an1">اضغط/ي على <strong>جرّب/ي مجانًا</strong> — سيفتح Chrome التطبيق تلقائيًا.</p></div>
+          <div class="install-step"><div class="is-num">2</div><p data-i18n="an2">اضغط/ي على <strong>النقاط الثلاث</strong> (⋮) أعلى يمين Chrome.</p></div>
+          <div class="install-step"><div class="is-num">3</div><p data-i18n="an3">مرّر/ي لأسفل واضغط/ي على <strong>"إضافة إلى الشاشة الرئيسية"</strong>.</p></div>
+          <div class="install-step"><div class="is-num">4</div><p data-i18n="an4">أكّد/ي بالضغط على <strong>تثبيت</strong> — التطبيق جاهز!</p></div>
         </div>
         <div class="install-note" data-i18n="anNote">على أجهزة Samsung، يمكنك أيضًا استخدام Samsung Internet بنفس الخطوات.</div>
       </div>
@@ -498,15 +498,15 @@
 </section>
 
 <footer>
-  <div class="brand"><div class="mark" style="background:none;"><svg viewBox="0 0 512 512" width="20" height="20"><defs><linearGradient id="bgm" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8791E8"/><stop offset="100%" stop-color="#4D48C4"/></linearGradient></defs><rect x="0" y="0" width="512" height="512" rx="115" fill="url(#bgm)"/><rect x="175" y="54" width="26" height="56" rx="13" fill="#FFFFFF"/><rect x="311" y="54" width="26" height="56" rx="13" fill="#FFFFFF"/><rect x="96" y="118" width="320" height="290" rx="32" fill="#FFFFFF"/><path d="M128,118 L384,118 A32,32 0 0 1 416,150 L416,198 L96,198 L96,150 A32,32 0 0 1 128,118 Z" fill="#4D48C4"/><circle cx="256" cy="303" r="62" fill="#E8598F"/><path d="M228,304 L248,324 L288,280" fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span data-i18n="brand">قاعتي</span></div>
-  <div class="contact-line" data-i18n="footerContact">للتواصل والاستفسار: <strong id="footerWhatsappNumber">+222 XX XX XX XX</strong></div>
+  <div class="brand"><svg width="28" height="28" style="border-radius:8px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"> <defs> <linearGradient id="bgF" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" stop-color="#8791E8"/> <stop offset="100%" stop-color="#4D48C4"/> </linearGradient> <radialGradient id="bulbGlowF" cx="50%" cy="50%" r="50%"> <stop offset="0%" stop-color="#FFF6D8" stop-opacity="0.9"/> <stop offset="40%" stop-color="#FFD34D" stop-opacity="0.5"/> <stop offset="100%" stop-color="#FFD34D" stop-opacity="0"/> </radialGradient> <linearGradient id="diamondGradF" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" stop-color="#C5F1FF"/> <stop offset="45%" stop-color="#4FC3F7"/> <stop offset="100%" stop-color="#1565C0"/> </linearGradient> </defs> <rect x="0" y="0" width="512" height="512" rx="115" fill="url(#bgF)"/> <!-- gold string lights, hanging from the top only — not reaching the bottom --> <g stroke="#E8B923" stroke-width="2.5" opacity="0.85"> <line x1="70" y1="0" x2="70" y2="300"/> <line x1="150" y1="0" x2="150" y2="360"/> <line x1="230" y1="0" x2="230" y2="260"/> <line x1="310" y1="0" x2="310" y2="260"/> <line x1="390" y1="0" x2="390" y2="360"/> <line x1="460" y1="0" x2="460" y2="300"/> </g> <!-- bulbs: soft glow halo + bright core + tiny highlight, for a more realistic lit look --> <g id="bulbsF"> <!-- string 1 --> <g><circle cx="70" cy="60" r="20" fill="url(#bulbGlowF)"/><circle cx="70" cy="60" r="8" fill="#FFCA3A"/><circle cx="70" cy="57" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="70" cy="160" r="20" fill="url(#bulbGlowF)"/><circle cx="70" cy="160" r="8" fill="#FFCA3A"/><circle cx="70" cy="157" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="70" cy="260" r="20" fill="url(#bulbGlowF)"/><circle cx="70" cy="260" r="8" fill="#FFCA3A"/><circle cx="70" cy="257" r="2.5" fill="#FFF9E6"/></g> <!-- string 2 --> <g><circle cx="150" cy="90" r="20" fill="url(#bulbGlowF)"/><circle cx="150" cy="90" r="8" fill="#FFCA3A"/><circle cx="150" cy="87" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="150" cy="200" r="20" fill="url(#bulbGlowF)"/><circle cx="150" cy="200" r="8" fill="#FFCA3A"/><circle cx="150" cy="197" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="150" cy="320" r="20" fill="url(#bulbGlowF)"/><circle cx="150" cy="320" r="8" fill="#FFCA3A"/><circle cx="150" cy="317" r="2.5" fill="#FFF9E6"/></g> <!-- string 3 --> <g><circle cx="230" cy="50" r="20" fill="url(#bulbGlowF)"/><circle cx="230" cy="50" r="8" fill="#FFCA3A"/><circle cx="230" cy="47" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="230" cy="150" r="20" fill="url(#bulbGlowF)"/><circle cx="230" cy="150" r="8" fill="#FFCA3A"/><circle cx="230" cy="147" r="2.5" fill="#FFF9E6"/></g> <!-- string 4 --> <g><circle cx="310" cy="50" r="20" fill="url(#bulbGlowF)"/><circle cx="310" cy="50" r="8" fill="#FFCA3A"/><circle cx="310" cy="47" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="310" cy="150" r="20" fill="url(#bulbGlowF)"/><circle cx="310" cy="150" r="8" fill="#FFCA3A"/><circle cx="310" cy="147" r="2.5" fill="#FFF9E6"/></g> <!-- string 5 --> <g><circle cx="390" cy="90" r="20" fill="url(#bulbGlowF)"/><circle cx="390" cy="90" r="8" fill="#FFCA3A"/><circle cx="390" cy="87" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="390" cy="200" r="20" fill="url(#bulbGlowF)"/><circle cx="390" cy="200" r="8" fill="#FFCA3A"/><circle cx="390" cy="197" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="390" cy="320" r="20" fill="url(#bulbGlowF)"/><circle cx="390" cy="320" r="8" fill="#FFCA3A"/><circle cx="390" cy="317" r="2.5" fill="#FFF9E6"/></g> <!-- string 6 --> <g><circle cx="460" cy="60" r="20" fill="url(#bulbGlowF)"/><circle cx="460" cy="60" r="8" fill="#FFCA3A"/><circle cx="460" cy="57" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="460" cy="160" r="20" fill="url(#bulbGlowF)"/><circle cx="460" cy="160" r="8" fill="#FFCA3A"/><circle cx="460" cy="157" r="2.5" fill="#FFF9E6"/></g> <g><circle cx="460" cy="260" r="20" fill="url(#bulbGlowF)"/><circle cx="460" cy="260" r="8" fill="#FFCA3A"/><circle cx="460" cy="257" r="2.5" fill="#FFF9E6"/></g> </g> <!-- wedding arch / gateway --> <path d="M170,404 L170,258 A86,86 0 0 1 342,258 L342,404 L314,404 L314,268 A58,58 0 0 0 198,268 L198,404 Z" fill="#FFFFFF"/> <rect x="146" y="404" width="220" height="14" rx="7" fill="#FFFFFF"/> <!-- red carpet with gold borders, leading out from the entrance all the way to the bottom edge --> <path d="M180,418 L332,418 L382,512 L130,512 Z" fill="#C41E3A" stroke="#E8B923" stroke-width="4" stroke-linejoin="round"/> <path d="M191,420 L151,510" stroke="#E8B923" stroke-width="2.5" opacity="0.85"/> <path d="M321,420 L361,510" stroke="#E8B923" stroke-width="2.5" opacity="0.85"/> <!-- small gold engagement rings, replacing the old dot --> <g fill="none" stroke="#E8B923" stroke-width="5"> <circle cx="245" cy="196" r="15"/> <circle cx="267" cy="196" r="15"/> </g> <!-- small faceted blue diamond, mounted on top of the right ring --> <path d="M267,171 L275,180 L267,189 L259,180 Z" fill="url(#diamondGradF)" stroke="#0D47A1" stroke-width="1"/> <path d="M267,171 L267,189 M259,180 L275,180" stroke="#E3F7FF" stroke-width="1" opacity="0.7"/> <path d="M262,175 L264,177 L262,179 L260,177 Z" fill="#FFFFFF" opacity="0.9"/> </svg><span data-i18n="brand">قاعتي</span></div>
+  <div class="contact-line" data-i18n="footerContact">للتواصل والاستفسار: <strong id="footerWhatsappNumber" style="direction:ltr; unicode-bidi:embed; display:inline-block;">+222 XX XX XX XX</strong></div>
   <div class="rights" data-i18n="footerRights">جميع الحقوق محفوظة</div>
 </footer>
 
 <script>
   // TODO: replace with the real live app URL once it's deployed on GitHub Pages
   // (same idea as stadbook.com linking "Essayer Gratuitement" to kerima1.github.io/StadBook/)
-  const APP_URL = 'https://your-username.github.io/your-repo/';
+  const APP_URL = 'https://qaaty.github.io/qaaty-app/';
 
   // Using the same number found on stadbook.com — replace if this app should use a different one
   const WHATSAPP_NUMBER = '22249395255';
@@ -581,7 +581,7 @@
       installIphone:'آيفون', installIphoneReq:'يتطلب Safari',
       ip1:'اضغط/ي على <strong>جرّب/ي مجانًا</strong> — سيفتح Safari التطبيق تلقائيًا.',
       ip2:'اضغط/ي على أيقونة <strong>المشاركة</strong> (مربع بسهم ↑) أسفل Safari.',
-      ip3:'مرّر/ي لأسفل واضغط/ي على <strong>"على الشاشة الرئيسية"</strong>.',
+      ip3:'مرّر/ي لأسفل واضغط/ي على <strong>"إضافة إلى الشاشة الرئيسية"</strong>.',
       ip4:'اضغط/ي على <strong>إضافة</strong> — تظهر أيقونة التطبيق على شاشتك!',
       ipNote:'استخدم/ي Safari فقط على الآيفون. Chrome وFirefox لا يدعمان التثبيت.',
       installAndroid:'أندرويد', installAndroidReq:'يُفضّل Chrome',
@@ -592,7 +592,7 @@
       anNote:'على أجهزة Samsung، يمكنك أيضًا استخدام Samsung Internet بنفس الخطوات.',
       pricingTitle:'مجانية حتى فاتح الشهر المقبل', pricingBigNumber:'1500', pricingFirstMonth:'اوقية / شهريًا بعد الفترة المجانية',
       pricingDesc:'التجربة مجانية من يوم إنشاء الحساب إلى فاتح الشهر المقبل. بعدها، اشتراك شهري بسيط وثابت — بدون عقود طويلة، وبدون مفاجآت.',
-      footerContact:'للتواصل والاستفسار: <strong id="footerWhatsappNumber"></strong>',
+      footerContact:'للتواصل والاستفسار: <strong id="footerWhatsappNumber" style="direction:ltr; unicode-bidi:embed; display:inline-block;"></strong>',
       footerRights:'© 2026 جميع الحقوق محفوظة',
     },
     fr: {
@@ -622,7 +622,7 @@
       installIphone:'iPhone', installIphoneReq:'Safari requis',
       ip1:'Appuyez sur <strong>Essayer Gratuitement</strong> — Safari ouvre l\'application automatiquement.',
       ip2:'Appuyez sur l\'icône <strong>Partager</strong> (carré avec flèche ↑) en bas de Safari.',
-      ip3:'Faites défiler et appuyez sur <strong>« Sur l\'écran d\'accueil »</strong>.',
+      ip3:'Faites défiler et appuyez sur <strong>« Ajouter à l\'écran d\'accueil »</strong>.',
       ip4:'Appuyez sur <strong>Ajouter</strong> — l\'icône apparaît sur votre écran !',
       ipNote:'Utilisez uniquement Safari sur iPhone. Chrome et Firefox ne supportent pas l\'installation.',
       installAndroid:'Android', installAndroidReq:'Chrome recommandé',
@@ -633,7 +633,7 @@
       anNote:'Sur Samsung, vous pouvez aussi utiliser Samsung Internet avec les mêmes étapes.',
       pricingTitle:'Gratuit jusqu\'au 1er du mois prochain', pricingBigNumber:'1500', pricingFirstMonth:'MRU / mois après la période gratuite',
       pricingDesc:"L'essai est gratuit du jour de la création du compte jusqu'au 1er du mois suivant. Ensuite, un abonnement mensuel simple et fixe — sans contrat long, sans surprise.",
-      footerContact:'Contact : <strong id="footerWhatsappNumber"></strong>',
+      footerContact:'Contact : <strong id="footerWhatsappNumber" style="direction:ltr; unicode-bidi:embed; display:inline-block;"></strong>',
       footerRights:'© 2026 Tous droits réservés',
     },
     en: {
@@ -674,7 +674,7 @@
       anNote:'On Samsung, you can also use Samsung Internet with the same steps.',
       pricingTitle:'Free until the 1st of next month', pricingBigNumber:'1500', pricingFirstMonth:'MRU / month after the free period',
       pricingDesc:'The trial is free from account creation until the 1st of the next month. After that, a simple, fixed monthly subscription — no long contracts, no surprises.',
-      footerContact:'Contact: <strong id="footerWhatsappNumber"></strong>',
+      footerContact:'Contact: <strong id="footerWhatsappNumber" style="direction:ltr; unicode-bidi:embed; display:inline-block;"></strong>',
       footerRights:'© 2026 All rights reserved',
     }
   };
